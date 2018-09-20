@@ -1,7 +1,9 @@
 import events from '../data/events.json'
 import * as actions from '../constants'
 const initialState = {
-  events,
+  events: [],
+  isLoading: false,
+  isError: false,
   filter: '',
   newName: '',
   newPlace: '',
@@ -91,7 +93,12 @@ export function eventsReducer(state = initialState, action){
           }
         }
       }
-      console.log(state)
+    case actions.EVENTS_GET_START:
+      return { ...state, isLoading: true }
+    case actions.EVENTS_GET_SUCCESS:
+      return { ...state, isLoading: false, events: action.payload.data }
+    case actions.EVENTS_GET_ERROR:
+      return { ...state, isLoading: false, isError: true }
     default:
       return state;
   }

@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 class Events extends React.Component {
+  componentDidMount() {
+    this.props.getEvents()
+  }
   handleSort(event) {
     event.preventDefault()
     const sortItem = event.currentTarget.id
@@ -100,7 +103,8 @@ const mapDispatchToProps = (dispatch) => {
     filterEvents: (filter) => dispatch(actions.filterEvents(filter)),
     changeFormField: (field, value) => dispatch(actions.changeFormField(field, value)),
     eventAdd: (name, place, date) => dispatch(actions.eventAdd(name, place, date)),
-    eventsSort: (id) => dispatch(actions.eventsSort(id))
+    eventsSort: (id) => dispatch(actions.eventsSort(id)),
+    getEvents: () => dispatch(actions.getEvents())
   }
 }
 
