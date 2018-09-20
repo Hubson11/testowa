@@ -1,0 +1,7 @@
+export const EVENTS_CLEAR = 'EVENTS_CLEAR'
+export const EVENT_CLEAR = 'EVENT_CLEAR'
+export const EVENTS_FILTER = 'EVENTS_FILTER'
+
+export const EVENTS_FORM_DATA = 'EVENTS_FORM_DATA'
+export const EVENT_ADD = 'EVENT_ADD'
+export const EVENTS_SORT = 'EVENTS_SORT'
