@@ -1,5 +1,5 @@
-import events from '../data/events.json'
 import * as actions from '../constants'
+
 const initialState = {
   events: [],
   isLoading: false,
@@ -7,6 +7,7 @@ const initialState = {
   filter: '',
   newName: '',
   newPlace: '',
+  local: false,
   newDate: '',
 };
 
@@ -17,6 +18,7 @@ export function eventsReducer(state = initialState, action){
     case actions.EVENT_CLEAR:
       const id = action.payload.eventId
       const filteredArray = state.events.filter(item=>item.id !== id)
+      localStorage.setItem('item', JSON.stringify(filteredArray))
       return {...state, events: filteredArray}
     case actions.EVENTS_FILTER:
       return {...state, filter: action.payload.filter}
@@ -26,13 +28,15 @@ export function eventsReducer(state = initialState, action){
     case actions.EVENT_ADD:
       const stateCopy = { ...state };
       const { name, place, date } = action.payload;
-      const maxId = Math.max(...events.map(item => item.id));
+      const maxId = Math.max(...state.events.map(item => item.id));
       stateCopy.events.push({
         id: maxId + 1,
         name: name,
         place: place,
         date: date,
+        local: true
       });
+      localStorage.setItem('item', JSON.stringify(stateCopy.events))
       return {
         ...state,
         events: stateCopy.events,
@@ -93,10 +97,18 @@ export function eventsReducer(state = initialState, action){
           }
         }
       }
+      break;
     case actions.EVENTS_GET_START:
       return { ...state, isLoading: true }
     case actions.EVENTS_GET_SUCCESS:
-      return { ...state, isLoading: false, events: action.payload.data }
+      const dataTable = action.payload.data
+      let storage = []
+      if(localStorage.getItem('item')){
+        storage = JSON.parse(localStorage.getItem('item'))
+        dataTable.push(storage)
+        return { ...state, isLoading: false, events: storage }
+    }
+      return { ...state, isLoading: false, events: dataTable }
     case actions.EVENTS_GET_ERROR:
       return { ...state, isLoading: false, isError: true }
     default:

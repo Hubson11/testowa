@@ -71,7 +71,7 @@ class Events extends React.Component {
 
             if (item.name.indexOf(this.props.filter) > -1 || item.date.indexOf(this.props.filter) > -1 || item.place.indexOf(this.props.filter) > -1) {
               return (
-                <EventItem {...item} key={item.id} onDeleteClicked={this.onDeleteClicked.bind(this)} changeNumber={this.changeNumber.bind(this)}/>
+                <EventItem {...item} local={item.local} key={`${item.id}${item.name}${item.place}${item.date}`} onDeleteClicked={this.onDeleteClicked.bind(this)} changeNumber={this.changeNumber.bind(this)}/>
               );
             }
 

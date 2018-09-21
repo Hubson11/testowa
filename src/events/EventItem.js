@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 const EventItem = (props) => {
   return (
     <Container>
-    <Item>
+    <Item local={props.local}>
       <ItemCont>
         <strong>{props.name}</strong>
       </ItemCont>
@@ -29,9 +28,13 @@ EventItem.propTypes = {
   name: PropTypes.string.isRequired,
   place: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  onDeleteClicked: PropTypes.func.isRequired
+  onDeleteClicked: PropTypes.func.isRequired,
+  local: PropTypes.bool
 };
 
+EventItem.defaultProps = {
+  local: false
+}
 const Container = styled.li`
   list-style-type: none;
 `
@@ -39,6 +42,7 @@ const Container = styled.li`
 const Item = styled.div`
   margin: 0 auto;
   line-height: 24px;
+  color: ${props => props.local ? 'red' : null}
 `
 
 const ItemCont = styled.div`
